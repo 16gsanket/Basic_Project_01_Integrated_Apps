@@ -22,7 +22,8 @@ const tasklist = [
 ];
 
 function ToDoList() {
-  const [tasks, setTasks] = useState(tasklist);
+  //can use dumy to do list ---> (tasklist) 
+  const [tasks, setTasks] = useState([]);
   const [taskquerry, setTaskQuerry] = useState("");
 
   function addtolist(newtask) {
@@ -32,11 +33,28 @@ function ToDoList() {
     const new_obj_task = {
       task: newtask,
       status: false,
+      id: tasks.length,
     };
-    // console.log(newtask);
+ 
     setTasks((tasks) => [...tasks, new_obj_task]);
     setTaskQuerry((querry) => (querry = ""));
   }
+
+  function remove_task(selected_id) {
+    setTasks((tasks) => tasks.filter((task) => task.id !== selected_id));
+  }
+
+  function mark_status(selected_id) {
+    console.log(selected_id);
+    setTasks((tasks) =>
+      //task.id === selected_id ? { ...task, status: !task.status } : task
+      // task.id == selected_id ? {...task , task.status : !(task.status)} : task
+      tasks.map((task) =>
+        task.id === selected_id ? { ...task, status: !task.status } : task
+      )
+    );
+  }
+
   return (
     <div className="h-screen w-screen">
       <NavBar />
@@ -64,7 +82,14 @@ function ToDoList() {
 
         <div className="h-5/6 w-full p-2  bg-slate-200 flex flex-wrap gap-1">
           {tasks.map((task) => {
-            return <TaskCard task={task} key={task.id} />;
+            return (
+              <TaskCard
+                task={task}
+                key={task.id}
+                remove_task={remove_task}
+                mark_status={mark_status}
+              />
+            );
           })}
         </div>
       </MainPage>
