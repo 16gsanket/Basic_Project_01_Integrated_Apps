@@ -31,72 +31,65 @@ const initalState = [
 ];
 
 function reducer(action, state) {
-  switch (action){
+  switch (action.type) {
+    case "add":
+      if (action.payload == undefined) return;
+      return { ...task, task: action.payload };
+    case "remove":
+      return state.tasks.filter((task) => task.id !== selected_id);
+    case "mark_status":
+      return state.tasks.map((task) =>
+        task.id === selected_id ? { ...task, status: !task.status } : task
+      );
+    case "edititem":
+      return state.tasks.map((task) => {
+        if (action.payload === task.id) {
+          state.taskquerry = task.task;
+          // setRevisedTask(task.task);
+          state.isediting = !edititem;
+          state.sel_id = task.id;
+        }
+      });
+    case "addele":
+      state.tasks = state.tasks.map(
+        (task) => task.id === state.sel_id && { ...task, task: task.taskquerry }
+      );
+      state.taskquerry = "";
 
-    case 1:
+      state.edititem = !edititem;
+      state.sel_id = null;
+      return {
+        ...state,
+        taskquerry: "",
+        edititem: !state.edititem,
+        sel_id: null,
+      };
 
+    case "setquey":
+      return { ...state, taskquerry: action.payload };
   }
-
 }
 
 function ToDoList() {
   //can use dumy to do list ---> (tasklist)
 
   const [state, dispatch] = useReducer(reducer, initalState);
-  const [tasks, setTasks] = useState([]);
-  const [taskquerry, setTaskQuerry] = useState("");
-  const [isediting, setIsEditing] = useState(false);
-  const [sel_id, setSelId] = useState(null);
 
   function addtolist(newtask) {
-    if (newtask == "") {
-      return;
-    }
-    const new_obj_task = {
-      task: newtask,
-      status: false,
-      id: tasks.length,
-    };
-
-    setTasks((tasks) => [...tasks, new_obj_task]);
-    setTaskQuerry((querry) => (querry = ""));
+    dispatch({ type: "add", payload: newtask });
   }
-
   function remove_task(selected_id) {
-    setTasks((tasks) => tasks.filter((task) => task.id !== selected_id));
+    dispatch({ type: "remove", payload: selected_id });
   }
-
   function mark_status(selected_id) {
-    console.log(selected_id);
-    setTasks((tasks) =>
-      tasks.map((task) =>
-        task.id === selected_id ? { ...task, status: !task.status } : task
-      )
-    );
+    dispatch({ type: "mark_status", payload: selected_id });
   }
-
   function edititem(selected_id) {
-    tasks.map((task) => {
-      if (selected_id === task.id) {
-        setTaskQuerry(task.task);
-        // setRevisedTask(task.task);
-        setIsEditing((edititem) => !edititem);
-        setSelId(task.id);
-      }
-    });
+    dispatch({ type: "edititem", payload: selected_id });
   }
 
   function addele() {
-    setTasks((tasks) =>
-      tasks.map((task) =>
-        task.id === sel_id ? { ...task, task: taskquerry } : task
-      )
-    );
-
-    setTaskQuerry("");
-    // setRevisedTask("");
-    setIsEditing((edititem) => !edititem);
-    setSelId(null);
+    dispatch({ type: "addele" });
   }
 
   return (
@@ -108,16 +101,16 @@ function ToDoList() {
           <input
             className=" h-2/4 w-10/12 rounded-full pl-4 outline-none"
             type="text"
-            value={taskquerry}
+            value={state?.taskquerry}
             onChange={(e) => {
-              setTaskQuerry(e.target.value);
+              dispatch({ type: "setquey", payload: e.target.value });
             }}
           />
           <button
             className="h-2/4 w-2/12 rounded-full bg-indigo-700 text-slate-300 hover:bg-indigo-800"
             type="button"
           >
-            {!isediting ? (
+            {!state.isediting ? (
               <span
                 onClick={() => {
                   addtolist(taskquerry);
@@ -132,7 +125,7 @@ function ToDoList() {
         </div>
 
         <div className="h-5/6 w-full p-2  bg-slate-200 flex flex-wrap gap-1">
-          {tasks.map((task) => {
+          {state.tasks?.map((task) => {
             return (
               <TaskCard
                 task={task}
