@@ -1,7 +1,7 @@
 import NavBar from "../components/NavBar";
 import MainPage from "../components/MainPage";
 import TaskCard from "../components/TaskCard";
-import { useState } from "react";
+import { useState, useReducer } from "react";
 
 const tasklist = [
   {
@@ -21,13 +21,32 @@ const tasklist = [
   },
 ];
 
+const initalState = [
+  {
+    tasks: [],
+    taskquerry: "",
+    isediting: false,
+    sel_id: null,
+  },
+];
+
+function reducer(action, state) {
+  switch (action){
+
+    case 1:
+
+  }
+
+}
+
 function ToDoList() {
   //can use dumy to do list ---> (tasklist)
+
+  const [state, dispatch] = useReducer(reducer, initalState);
   const [tasks, setTasks] = useState([]);
   const [taskquerry, setTaskQuerry] = useState("");
   const [isediting, setIsEditing] = useState(false);
   const [sel_id, setSelId] = useState(null);
-  // const [revised_task, setRevisedTask] = useState("");
 
   function addtolist(newtask) {
     if (newtask == "") {
@@ -50,8 +69,6 @@ function ToDoList() {
   function mark_status(selected_id) {
     console.log(selected_id);
     setTasks((tasks) =>
-      //task.id === selected_id ? { ...task, status: !task.status } : task
-      // task.id == selected_id ? {...task , task.status : !(task.status)} : task
       tasks.map((task) =>
         task.id === selected_id ? { ...task, status: !task.status } : task
       )
@@ -59,8 +76,6 @@ function ToDoList() {
   }
 
   function edititem(selected_id) {
-  
-
     tasks.map((task) => {
       if (selected_id === task.id) {
         setTaskQuerry(task.task);
@@ -69,7 +84,6 @@ function ToDoList() {
         setSelId(task.id);
       }
     });
- 
   }
 
   function addele() {
