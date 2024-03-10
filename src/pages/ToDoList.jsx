@@ -22,9 +22,12 @@ const tasklist = [
 ];
 
 function ToDoList() {
-  //can use dumy to do list ---> (tasklist) 
+  //can use dumy to do list ---> (tasklist)
   const [tasks, setTasks] = useState([]);
   const [taskquerry, setTaskQuerry] = useState("");
+  const [isediting, setIsEditing] = useState(false);
+  const [sel_id, setSelId] = useState(null);
+  // const [revised_task, setRevisedTask] = useState("");
 
   function addtolist(newtask) {
     if (newtask == "") {
@@ -35,7 +38,7 @@ function ToDoList() {
       status: false,
       id: tasks.length,
     };
- 
+
     setTasks((tasks) => [...tasks, new_obj_task]);
     setTaskQuerry((querry) => (querry = ""));
   }
@@ -55,6 +58,33 @@ function ToDoList() {
     );
   }
 
+  function edititem(selected_id) {
+  
+
+    tasks.map((task) => {
+      if (selected_id === task.id) {
+        setTaskQuerry(task.task);
+        // setRevisedTask(task.task);
+        setIsEditing((edititem) => !edititem);
+        setSelId(task.id);
+      }
+    });
+ 
+  }
+
+  function addele() {
+    setTasks((tasks) =>
+      tasks.map((task) =>
+        task.id === sel_id ? { ...task, task: taskquerry } : task
+      )
+    );
+
+    setTaskQuerry("");
+    // setRevisedTask("");
+    setIsEditing((edititem) => !edititem);
+    setSelId(null);
+  }
+
   return (
     <div className="h-screen w-screen">
       <NavBar />
@@ -72,11 +102,18 @@ function ToDoList() {
           <button
             className="h-2/4 w-2/12 rounded-full bg-indigo-700 text-slate-300 hover:bg-indigo-800"
             type="button"
-            onClick={() => {
-              addtolist(taskquerry);
-            }}
           >
-            + Add Task
+            {!isediting ? (
+              <span
+                onClick={() => {
+                  addtolist(taskquerry);
+                }}
+              >
+                + Add Task
+              </span>
+            ) : (
+              <span onClick={addele}>Edit</span>
+            )}
           </button>
         </div>
 
@@ -88,6 +125,7 @@ function ToDoList() {
                 key={task.id}
                 remove_task={remove_task}
                 mark_status={mark_status}
+                edititem={edititem}
               />
             );
           })}
