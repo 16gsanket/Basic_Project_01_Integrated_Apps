@@ -17,6 +17,7 @@ function TaskCard({ task, remove_task, mark_status }) {
 
       <h2>{task.task}</h2>
 
+      
       <span
         onClick={() => {
           // console.log(task.status);
