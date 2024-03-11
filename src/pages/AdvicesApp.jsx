@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Skeleton from "../components/Skeleton";
 
 function AdvicesApp() {
   // Use the useParams hook to extract the dynamic part of the URL
-  const { adviceType } = useParams();
-  console.log(adviceType);
+  const { advice } = useParams();
+  console.log(advice);
+
+  // const [number_jokes, setNumber_Jokes] = useState(0);
+
+  function change_number_of_jokes() {
+    setNumber_Jokes((number_jokes) => number_jokes + 1);
+  }
 
   return (
     <div>
@@ -32,8 +38,12 @@ function AdvicesApp() {
               </div>
             </NavLink>
           </div>
+          <h3>{advice}</h3>
         </div>
-        <Outlet />
+        <Outlet
+          // number_jokes={number_jokes}
+          // change_number_of_jokes={change_number_of_jokes}
+        />
       </Skeleton>
     </div>
   );

@@ -16,7 +16,8 @@ function App() {
           <Route path="todolist" element={<ToDoList />} />
           <Route path="skeleton" element={<Skeleton />} />
           <Route path="AdviceApp" element={<AdvicesApp />}>
-            <Route index element={<Navigate replace to="dark" />} />
+            <Route path=":advice" element={<> <p>Section Comming Soon</p> </>} />
+            {/* <Route index element={<Navigate replace to="dark" />} /> */}
             <Route path="dark" element={<Dark />} />
             <Route path="clean" element={<Clean />} />
           </Route>
