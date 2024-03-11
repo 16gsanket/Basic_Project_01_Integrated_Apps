@@ -2,7 +2,7 @@ import "./App.css";
 import ToDoList from "./pages/ToDoList";
 import Skeleton from "./components/Skeleton";
 import Homepage from "./pages/Homepage";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdvicesApp from "./pages/AdvicesApp";
 import Dark from "./components/Dark";
 import Clean from "./components/Clean";
