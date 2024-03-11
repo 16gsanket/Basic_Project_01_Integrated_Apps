@@ -5,13 +5,13 @@ import { useState } from "react";
 
 
 
-function Skeleton({children}) {
+function Skeleton({children , coins}) {
   //can use dumy to do list ---> (tasklist) 
   
 
   return (
     <div className="h-screen w-screen">
-      <NavBar />
+      <NavBar coins={coins}/>
 
       <MainPage>
 

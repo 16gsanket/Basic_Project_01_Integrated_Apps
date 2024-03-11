@@ -18,10 +18,10 @@ const PROJECT_LIST = [
   },
 ];
 
-function Homepage() {
+function Homepage({ coins }) {
   return (
     <div className="h-screen w-screen">
-      <NavBar />
+      <NavBar coins={coins} />
       <MainPage>
         <div className="h-full w-full flex gap-2 flex-wrap p-3 align-middle justify-center items-center">
           {PROJECT_LIST.map((project) => (

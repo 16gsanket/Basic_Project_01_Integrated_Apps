@@ -40,13 +40,17 @@ function reducer(state, action) {
   }
 }
 
-function ToDoList() {
+function ToDoList({ coins, deduce_coins }) {
   const [state, dispatch] = useReducer(reducer, initalState);
   const [taskquery, setTaskQuery] = useState("");
 
+  function coin_kam_kar_bs() {
+    deduce_coins();
+  }
+
   return (
     <div className="h-screen w-screen">
-      <NavBar />
+      <NavBar coins={coins} />
 
       <MainPage>
         <div className="h-1/6 w-full p-2 flex align-middle justify-between bg-indigo-200 items-center gap-1">
@@ -61,7 +65,7 @@ function ToDoList() {
             type="button"
             onClick={() => {
               dispatch({ type: "add", payload: taskquery });
-
+              coin_kam_kar_bs();
               setTaskQuery("");
             }}
           >
