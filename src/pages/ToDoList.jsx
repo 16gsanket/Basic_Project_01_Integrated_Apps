@@ -1,7 +1,8 @@
 import NavBar from "../components/NavBar";
 import MainPage from "../components/MainPage";
 import TaskCard from "../components/TaskCard";
-import { useReducer, useState } from "react";
+import { useContext, useReducer, useState } from "react";
+import CoinsContext from "../context/CoinContext";
 
 const tasklist = [
   {
@@ -40,13 +41,15 @@ function reducer(state, action) {
   }
 }
 
-function ToDoList({ coins, deduce_coins }) {
+function ToDoList() {
   const [state, dispatch] = useReducer(reducer, initalState);
   const [taskquery, setTaskQuery] = useState("");
 
   function coin_kam_kar_bs() {
     deduce_coins();
   }
+
+  const { coins, deduce_coins } = useContext(CoinsContext);
 
   return (
     <div className="h-screen w-screen">

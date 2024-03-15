@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Skeleton from "../components/Skeleton";
 import NavBar from "../components/NavBar";
+import CoinsContext from "../context/CoinContext";
 
-function AdvicesApp({ coins, deduce_coins }) {
+function AdvicesApp() {
   // Use the useParams hook to extract the dynamic part of the URL
   const { advice } = useParams();
   console.log(advice);
+
+  const { coins, deduce_coins } = useContext(CoinsContext);
 
   return (
     <div>

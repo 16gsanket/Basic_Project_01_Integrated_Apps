@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Joke from "./Joke";
 import { useParams } from "react-router-dom";
 import FetchJokesHook from "./FetchJokesHook";
+import CoinsContext from "../context/CoinContext";
 
-function Dark({ deduce_coins }) {
+function Dark() {
   const { joke, NewJoke } = FetchJokesHook();
+  const { deduce_coins } = useContext(CoinsContext);
 
   function dual_action() {
     NewJoke();

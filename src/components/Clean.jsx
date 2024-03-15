@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Joke from "./Joke";
 import FetchJokesHook from "./FetchJokesHook";
+import CoinsContext from "../context/CoinContext";
 
-function Clean({ deduce_coins }) {
+function Clean() {
   const { joke, NewJoke } = FetchJokesHook();
+
+  const { deduce_coins } = useContext(CoinsContext);
 
   function dual_action() {
     NewJoke();

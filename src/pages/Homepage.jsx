@@ -2,6 +2,8 @@ import NavBar from "../components/NavBar";
 import MainPage from "../components/MainPage";
 import ProjectCards from "../components/ProjectCards";
 import { NavLink } from "react-router-dom";
+import CoinsContext from "../context/CoinContext";
+import { useContext } from "react";
 
 const PROJECT_LIST = [
   {
@@ -18,7 +20,8 @@ const PROJECT_LIST = [
   },
 ];
 
-function Homepage({ coins }) {
+function Homepage() {
+  const { coins } = useContext(CoinsContext);
   return (
     <div className="h-screen w-screen">
       <NavBar coins={coins} />
